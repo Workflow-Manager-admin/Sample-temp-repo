@@ -1,17 +1,21 @@
-/* CSS Variables for Theme Management */
 :root {
   /* Light theme colors */
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
   --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --accent-color: #ffd600;
+  --primary-color: #1976d2;
+  --secondary-color: #424242;
+  --border-color: #e0e0e0;
+  --ttt-btn-bg: #fff;
+  --ttt-btn-hover-bg: #f0f3fa;
+  --ttt-btn-accent: var(--accent-color);
+  --ttt-btn-primary: var(--primary-color);
+  --ttt-btn-secondary: var(--secondary-color);
 }
 
+/* Dark mode is present for reference but not intended for production here */
 [data-theme="dark"] {
-  /* Dark theme colors */
   --bg-primary: #1a1a1a;
   --bg-secondary: #282c34;
   --text-primary: #ffffff;
@@ -21,6 +25,7 @@
   --button-text: #ffffff;
 }
 
+/* ========== Template Styles ========== */
 .App {
   text-align: center;
   background-color: var(--bg-primary);
@@ -62,8 +67,8 @@
   position: absolute;
   top: 20px;
   right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
+  background-color: var(--button-bg, #1976d2);
+  color: var(--button-text, #fff);
   border: none;
   border-radius: 8px;
   padding: 10px 20px;
@@ -71,12 +76,12 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.10);
 }
 
 .theme-toggle:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
   opacity: 0.9;
 }
 
@@ -85,15 +90,11 @@
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg);}
+  to { transform: rotate(360deg);}
 }
 
-/* Responsive design for mobile */
+/* Responsive design for mobile (template control) */
 @media (max-width: 768px) {
   .theme-toggle {
     top: 10px;
@@ -102,3 +103,250 @@
     font-size: 12px;
   }
 }
+
+/* ========== Tic Tac Toe Game Styles ========== */
+
+.ttt-outer {
+  min-height: 100vh;
+  background: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: stretch;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Liberation Sans', 'Noto Sans', sans-serif;
+}
+
+.ttt-container {
+  background: var(--bg-primary);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(44,56,74,0.12), 0 1.5px 6px rgba(33,47,81,0.08);
+  padding: 32px 30px 16px 30px;
+  margin-top: 32px;
+  max-width: 430px;
+  width: 98vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.ttt-title {
+  margin: 0.25em 0 0.1em 0;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 2.3rem;
+}
+
+.ttt-controls {
+  display: flex;
+  gap: 1.5em;
+  flex-wrap: wrap;
+  margin-bottom: 0.4em;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.ttt-mode-select {
+  display: flex;
+  align-items: center;
+  gap: 0.45em;
+}
+
+.ttt-label {
+  color: var(--secondary-color);
+  font-size: 1.04em;
+}
+
+.ttt-select {
+  font-size: 1.03em;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-color);
+  background: var(--ttt-btn-bg);
+  color: var(--text-primary);
+  padding: 6px 14px;
+  margin-left: 4px;
+  outline: none;
+  transition: border 0.2s;
+}
+.ttt-select:focus {
+  border: 1.5px solid var(--accent-color);
+}
+
+.ttt-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-size: 1em;
+  font-weight: 600;
+  background: var(--ttt-btn-bg);
+  color: var(--primary-color);
+  cursor: pointer;
+  box-shadow: 0 1.5px 6px rgba(33,47,81,0.05);
+  transition: background 0.23s, color 0.23s;
+}
+
+.ttt-btn:not(.accent):hover, .ttt-btn:not(.accent):focus {
+  background: var(--ttt-btn-hover-bg);
+}
+
+.ttt-btn.accent {
+  background: var(--accent-color);
+  color: var(--text-primary);
+  border: 1.8px solid var(--accent-color);
+  transition: background 0.2s, color 0.2s;
+}
+.ttt-btn.accent:hover, .ttt-btn.accent:focus {
+  box-shadow: 0 2.5px 10px rgba(255,214,0,.12);
+  background: #ffe066;
+  color: #111;
+}
+.ttt-btn.ttt-btn-reset {
+  margin-left: 1em;
+  background: var(--ttt-btn-secondary);
+  color: #fff;
+  border: 1.5px solid var(--secondary-color);
+  font-size: 0.93em;
+  padding: 6px 16px;
+  margin-top: 10px;
+}
+.ttt-btn.ttt-btn-reset:hover, .ttt-btn.ttt-btn-reset:focus {
+  background: #616161;
+  color: #fff;
+}
+
+/* Game Board */
+.ttt-board-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.7em 0;
+  width: 100%;
+}
+
+.ttt-board {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ttt-row {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+}
+
+.ttt-cell {
+  width: 80px;
+  height: 80px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--accent-color);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  border-radius: 9px;
+  margin: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.13s, border 0.2s;
+  outline: none;
+  box-shadow: 0 1px 6px rgba(21,21,21,0.06);
+}
+
+.ttt-cell:disabled {
+  background: #e8eaf6;
+  opacity: 0.8;
+  cursor: not-allowed;
+  color: #949494;
+}
+.ttt-cell:not(:disabled):hover, .ttt-cell:not(:disabled):focus {
+  background: #fffde7;
+  border-color: var(--primary-color);
+}
+
+/* Info/scoreboard */
+.ttt-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 0.4em;
+}
+
+.ttt-status {
+  font-size: 1.18em;
+  margin-top: 0.18em;
+  margin-bottom: 0.44em;
+  font-weight: 500;
+  letter-spacing: 0.7px;
+}
+
+.ttt-scoreboard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.3em;
+  margin: 0.3em 0 0 0;
+  flex-wrap: wrap;
+}
+
+.ttt-score-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-secondary);
+  border-radius: 9px;
+  box-shadow: 0 1.5px 7px rgba(33,47,81,0.07);
+  padding: 14px 20px 8px 20px;
+  min-width: 74px;
+  margin: 5px 0;
+}
+.ttt-score-label {
+  font-size: 1.13em;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+.ttt-score-value {
+  font-size: 1.19em;
+}
+
+.ttt-footer {
+  text-align: center;
+  font-size: 0.99em;
+  color: #888;
+  margin: 18px 3vw 8px 3vw;
+  opacity: 0.82;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .ttt-container {
+    padding: 16px 4vw 8px 4vw;
+    margin-top: 14px;
+    max-width: 99vw;
+    box-shadow: 0 2px 12px rgba(44,56,74,.09);
+  }
+  .ttt-title {
+    font-size: 6.1vw;
+  }
+  .ttt-board {
+    width: 94vw;
+    max-width: 97vw;
+  }
+  .ttt-cell {
+    width: 19vw;
+    height: 19vw;
+    max-width: 94px;
+    max-height: 94px;
+    font-size: 7vw;
+    margin: 2vw 1vw;
+  }
+  .ttt-scoreboard {
+    gap: 0.74em;
+  }
+  .ttt-score-tile {
+    min-width: 56px;
+    padding: 6.5vw 2vw 12px 2vw;
+  }
+}
+
